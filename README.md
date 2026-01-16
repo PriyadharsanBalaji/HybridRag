@@ -1,98 +1,135 @@
-# 🤖 Hybrid RAG System
+# 🚀 Hybrid RAG System
 
-A production-ready Retrieval-Augmented Generation (RAG) system combining **Vector Search (ChromaDB)** and **Knowledge Graphs (NetworkX)** with **Google Gemini AI**.
+A production-ready Retrieval-Augmented Generation (RAG) system combining **Vector Search (ChromaDB)** and **Knowledge Graph reasoning (NetworkX)** powered by **Google Gemini AI** — fully optimized for the **free tier**.
+
+---
 
 ## ✨ Features
 
-- **Dual Retrieval System**: Vector similarity search + Knowledge graph traversal
-- **Free Tier Optimized**: Uses Gemini Free API with intelligent rate limiting
-- **Multi-Format Support**: PDF, DOCX, TXT, MD, CSV, XLSX, PPTX, HTML
-- **Beautiful UI**: Modern Streamlit interface with visualizations
-- **Entity Extraction**: Automatic entity and relationship extraction using spaCy
-- **Production Ready**: Comprehensive logging, error handling, and metrics
+- **Hybrid Retrieval**
+  - Vector similarity search
+  - Knowledge graph traversal
+- **Free Tier Optimized**
+  - Gemini Free API + intelligent rate limiting
+- **Multi-Format Parsing**
+  - PDF, DOCX, TXT, MD, CSV, XLSX, PPTX, HTML
+- **Modern UI**
+  - Streamlit interface with visualizations
+- **Entity Extraction**
+  - spaCy-based entity + relationship extraction
+- **Production Ready**
+  - Logging, error handling, metrics, attribution
 
-## 🏗️ Architecture
+---
 
+## 🏗️ Architecture Overview
+
+```
 User Query
-↓
-┌───────────────────────────────┐
-│ Hybrid Retriever │
-│ ┌─────────┐ ┌────────────┐ │
-│ │ Vector │ │ Knowledge │ │
-│ │ Search │ │ Graph │ │
-│ │(Cosine) │ │ (NetworkX) │ │
-│ └─────────┘ └────────────┘ │
-└───────────────────────────────┘
-↓
+   │
+   ▼
+┌──────────────────────────────────┐
+│         Hybrid Retriever         │
+│ ┌────────────┐  ┌──────────────┐ │
+│ │  Vector    │  │ Knowledge    │ │
+│ │  Search    │  │  Graph       │ │
+│ │ (Cosine)   │  │ (NetworkX)   │ │
+│ └────────────┘  └──────────────┘ │
+└──────────────────────────────────┘
+   │
+   ▼
 Context Fusion
-↓
+   │
+   ▼
 Gemini LLM (Free Tier)
-↓
+   │
+   ▼
 Response + Sources
+```
 
-text
+---
 
 ## 📦 Installation
 
 ### Prerequisites
-
-- Python 3.9+
+- Python **3.9+**
 - pip
 
-### Setup
+---
 
-1. **Clone the repository**
+### 1. Clone the repository
+
 ```bash
 git clone <your-repo>
 cd hybrid-rag-system
-Create virtual environment
+```
 
-bash
+### 2. Create virtual environment
+
+```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install dependencies
+source venv/bin/activate      # Windows: venv\Scripts\activate
+```
 
-bash
+### 3. Install dependencies
+
+```bash
 pip install -r requirements.txt
-Download spaCy model
+```
 
-bash
+### 4. Download spaCy model
+
+```bash
 python -m spacy download en_core_web_sm
-Configure environment
+```
 
-bash
+### 5. Configure `.env`
+
+```bash
 cp .env.example .env
-Edit .env and add your Gemini API key:
+```
 
-bash
+Edit `.env` and set:
+
+```
 GOOGLE_API_KEY=your_gemini_api_key_here
-Get your FREE API key from: https://makersuite.google.com/app/apikey
+```
 
-🚀 Usage
-Start the application
-bash
+Free key → https://makersuite.google.com/app/apikey
+
+---
+
+## 🚀 Running the Application
+
+```bash
 streamlit run app.py
-The app will open in your browser at http://localhost:8501
+```
 
-Using the System
-Upload Documents: Use the sidebar to upload PDF, DOCX, or other supported files
+App opens at:
 
-Process: Click "Process Files" to ingest documents
+> http://localhost:8501
 
-Ask Questions: Use the chat interface to query your documents
+---
 
-View Sources: Check sources and knowledge graph relationships
+## 🧩 Workflow
 
-Monitor: View analytics and system metrics
+1. Upload documents
+2. Click **Process Files**
+3. Ask questions
+4. View sources + graph relations
+5. Monitor metrics
 
-📁 Project Structure
-text
+---
+
+## 📁 Project Structure
+
+```
 hybrid-rag-system/
-├── app.py                      # Main Streamlit application
-├── config.py                   # Configuration
+├── app.py
+├── config.py
 ├── requirements.txt
 ├── .env.example
-├── src/                        # Core logic
+├── src/
 │   ├── document_processor.py
 │   ├── vector_store.py
 │   ├── knowledge_graph.py
@@ -101,152 +138,96 @@ hybrid-rag-system/
 │   ├── embeddings.py
 │   ├── entity_extractor.py
 │   └── llm_manager.py
-├── utils/                      # Utilities
+├── utils/
 │   ├── logger.py
 │   ├── helpers.py
 │   ├── validators.py
 │   ├── metrics.py
 │   └── rate_limiter.py
-├── database/                   # Database managers
+├── database/
 │   ├── chroma_manager.py
 │   └── graph_manager.py
-└── ui/                         # UI components
+└── ui/
     ├── components.py
     ├── styles.py
     └── visualizations.py
-⚙️ Configuration
-Key settings in .env:
+```
 
-GEMINI_MODEL: gemini-1.5-flash (FREE) or gemini-pro
+---
 
-MAX_REQUESTS_PER_MINUTE: 15 (free tier limit)
+## ⚙️ Configuration
 
-MAX_REQUESTS_PER_DAY: 1500 (free tier limit)
+Key `.env` variables:
 
-EMBEDDING_MODEL: all-MiniLM-L6-v2 (free)
+| Variable | Description |
+|---|---|
+| `GOOGLE_API_KEY` | Gemini Free API key |
+| `GEMINI_MODEL` | `gemini-1.5-flash` (default) |
+| `MAX_REQUESTS_PER_MINUTE` | Free tier rate limit |
+| `MAX_REQUESTS_PER_DAY` | Free tier daily quota |
+| `EMBEDDING_MODEL` | `all-MiniLM-L6-v2` |
+| `MAX_CHUNK_SIZE` | Chunk token size |
+| `TOP_K_VECTOR_RESULTS` | Vector retrieval count |
+| `ENABLE_KNOWLEDGE_GRAPH` | Toggle graph retrieval |
 
-MAX_CHUNK_SIZE: 1000 tokens
+---
 
-TOP_K_VECTOR_RESULTS: 5
+## 📊 Performance
 
-ENABLE_KNOWLEDGE_GRAPH: true
+- Retrieval: **0.5 – 1s**
+- Generation: **1.5 – 3s**
+- End-to-end: **2 – 4s**
 
-🔧 Advanced Usage
-Custom System Prompts
-Modify the system prompt in src/rag_chain.py for different behaviors.
+---
 
-Adding New Document Types
-Add loaders in src/document_processor.py.
+## 🧠 Entity & Graph Extraction
 
-Adjusting Retrieval
-Tune TOP_K_VECTOR_RESULTS and TOP_K_GRAPH_RESULTS in config.
+- Extracts entities using **spaCy**
+- Builds directed graph with relationships
+- Visualizes via Streamlit
 
-📊 Performance
-Average query time: ~2-4 seconds
+---
 
-Retrieval: ~0.5-1 seconds
+## 🐛 Troubleshooting
 
-Generation: ~1.5-3 seconds (depends on Gemini API)
+| Issue | Fix |
+|---|---|
+| Rate limits | Auto handled via queue |
+| Memory issues | Reduce `MAX_CHUNK_SIZE` |
+| spaCy missing | `python -m spacy download en_core_web_sm` |
 
-🐛 Troubleshooting
-API Rate Limits
-The system automatically handles Gemini free tier limits
+---
 
-Requests queue if limits are reached
+## 🎯 Setup Script
 
-Memory Issues
-Reduce MAX_CHUNK_SIZE if processing large documents
-
-Limit concurrent file uploads
-
-spaCy Model Missing
-bash
-python -m spacy download en_core_web_sm
-📝 License
-MIT License
-
-🤝 Contributing
-Contributions welcome! Please open an issue or PR.
-
-📧 Support
-For issues, please open a GitHub issue.
-
-Made with ❤️ using Streamlit, LangChain, ChromaDB, and Gemini AI
-
-text
-
-***
-
-### **28. setup.sh**
+Make executable:
 
 ```bash
-#!/bin/bash
-
-# Hybrid RAG System Setup Script
-
-echo "🚀 Setting up Hybrid RAG System..."
-
-# Create virtual environment
-echo "📦 Creating virtual environment..."
-python3 -m venv venv
-
-# Activate virtual environment
-echo "✅ Activating virtual environment..."
-source venv/bin/activate
-
-# Upgrade pip
-echo "⬆️  Upgrading pip..."
-pip install --upgrade pip
-
-# Install requirements
-echo "📥 Installing dependencies..."
-pip install -r requirements.txt
-
-# Download spaCy model
-echo "🧠 Downloading spaCy model..."
-python -m spacy download en_core_web_sm
-
-# Create .env from template
-if [ ! -f .env ]; then
-    echo "📝 Creating .env file..."
-    cp .env.example .env
-    echo "⚠️  Please edit .env and add your GOOGLE_API_KEY"
-fi
-
-# Create necessary directories
-echo "📁 Creating directories..."
-mkdir -p data/uploads data/processed data/chroma_db logs
-
-echo "✅ Setup complete!"
-echo ""
-echo "Next steps:"
-echo "1. Edit .env and add your Gemini API key"
-echo "2. Run: source venv/bin/activate"
-echo "3. Run: streamlit run app.py"
-echo ""
-echo "🎉 Happy RAG-ing!"
-🎯 INSTALLATION & USAGE
-Quick Start
-bash
-# 1. Make setup script executable
 chmod +x setup.sh
+```
 
-# 2. Run setup
+Run:
+
+```bash
 ./setup.sh
+```
 
-# 3. Edit .env and add your Gemini API key
-nano .env
+---
 
-# 4. Run the app
-streamlit run app.py
-✨ FEATURES SUMMARY
-✅ 100% Free - Gemini API, ChromaDB, NetworkX
-✅ Rate Limiting - Automatic handling of API limits
-✅ Hybrid Search - Vector + Knowledge Graph
-✅ Beautiful UI - Modern, responsive Streamlit interface
-✅ Production Ready - Logging, metrics, error handling
-✅ Multi-Format - Supports 8+ document types
-✅ Entity Extraction - Automatic with spaCy
-✅ Graph Visualization - Interactive knowledge graph
-✅ Source Attribution - Tracks all information sources
-✅ Performance Metrics - Real-time analytics
+## 📝 License
+
+MIT License
+
+---
+
+## 🤝 Contributing
+
+PRs and issues welcome!
+
+---
+
+## 📧 Support
+
+Open a GitHub issue.
+
+Made with ❤️ using Streamlit, LangChain, ChromaDB, NetworkX, and Gemini AI.
